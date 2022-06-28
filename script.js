@@ -28,7 +28,8 @@ function addBookToLibrary(){
     const item = new Book(bkname,authname,pgnum,rdstatus)
 
     myLibrary.push(item)
-    console.log(myLibrary)
+    //test for library
+    //console.log(myLibrary)
 
 }
 
@@ -49,18 +50,20 @@ function render(){
 
     //creates all the elements
     const items = document.createElement("div")
+    // give data attribute and add class
+    items.classList.add("items")
+    items.dataset.order=index
+    
     const thebookname = document.createElement("h3")
     const theauthorname = document.createElement("h2")
     const thepagesread = document.createElement("h2")
     const therdstatus = document.createElement("h2")
-    const changestatus = document.createElement("button")
+    const change = document.createElement("button")
 
     //stores data in the elements
     thebookname.textContent=myLibrary[index].bkname
     theauthorname.textContent=myLibrary[index].authname
     thepagesread.textContent=myLibrary[index].pgnum
-   
-
     // stores the data of the checked box
     if (myLibrary[index].rdstatus==true) {
       therdstatus.textContent="Read"
@@ -69,22 +72,27 @@ function render(){
       therdstatus.textContent="Not finished reading"
     }
 
-
-    // ERROR IS HERE
-    //I WANT THIS TO PRINT ONLY WHEN THE INNNER BUTTON IS PRESSED
-    changestatus.textContent="change status"
-    changestatus.addEventListener("click", console.log(index))
-    
-
-
-    items.classList.add("items")
     items.appendChild(thebookname)
     items.appendChild(theauthorname)
     items.appendChild(thepagesread)
     items.appendChild(therdstatus)
-    items.appendChild(changestatus)
+    items.appendChild(change)
     
     right.appendChild(items)
+
+
+    //console.log(items.lastChild)
+    // ERROR IS HERE
+    //I WANT THIS TO PRINT ONLY WHEN THE INNNER BUTTON IS PRESSED
+    items.lastChild.addEventListener("click", console.log(index))
+
+    change.textContent="change status"
+    //change.
+    
+
+    
+    
+   
 
 
   }
