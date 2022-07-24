@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Book Library</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,25 +12,21 @@
 
     <div class="left">
         <h1>Please add your book</h1>
-        
+        <form id="formID">
             <input type="text" id="book-name" placeholder="Book Name">
             <input type="text" id="author" placeholder="Author Name">
             <input type="text" id="pages" placeholder="Number of Pages">
             <p><hi/p>
-            <label for="checbox">Did you read it?</label>
+            <label for="checkbox">Did you read it?</label>
             <input type="checkbox" id="read-status">
             <p></p>
-            <button onclick="addBookToLibrary(); render()">Add new books</button>
-          
+            <input type="submit" value="Add book">
+        </form>
     </div>
 
 
     <div class="right">
-        <div class="items">
-            <h3>Book name name</h3>
-            <h2>Author name</h2>
-            <h2>pages read</h2>
-        </div>
+        
 
     </div>
 </div>

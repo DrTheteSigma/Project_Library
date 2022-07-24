@@ -1,101 +1,74 @@
-const right = document.querySelector(".right")
+class Book{
+  constructor(title, author, numberpages, readstatus ){
+    this.title=title;
+    this.author=author;
+    this.numberpages=numberpages
+    this.readstatus=readstatus
+  }
+}   
 
-let myLibrary = [];
-
-// object funtion
-function Book(bkname, authname, pgnum,rdstatus) {
-    this.bkname = bkname
-    this.authname = authname 
-    this.pgnum =  pgnum 
-    this.rdstatus = rdstatus 
-    this.changestatus = function(){
-      if(this.rdstatus == true){
-        this.rdstatus=false
-      }else{
-        this.rdstatus=true
+class UI {
+  static displayBooks(){
+    const StoredBooks = [
+      {
+        title: "Book one",
+        author: "John one",
+        numberpages: "1",
+        readstatus: "true"
+      },
+      {
+        title: "Book two",
+        author: "John two",
+        numberpages: "2",
+        readstatus: "false"
       }
+    ];
+    const books = StoredBooks;
+
+    books.forEach((book) => UI.addBookToList(book));
     }
-
-  }
-
-
-  // Takes the elements from the form and stores them in an object then adds it to a list
-function addBookToLibrary(){
-    const bkname = document.getElementById("book-name").value
-    const authname = document.getElementById("author").value
-    const pgnum = document.getElementById("pages").value
-    const rdstatus = document.getElementById("read-status").checked
-    const item = new Book(bkname,authname,pgnum,rdstatus)
-
-    myLibrary.push(item)
-    //test for library
-    //console.log(myLibrary)
-
-}
-
-
-
-//this function read the objects from the list
-
-function render(){
-
-
-  //deletes all the past renders
-  while(right.firstChild){
-    right.removeChild(right.firstChild);
-  }
-
-
-  for (let index = 0; index < myLibrary.length; index++) {
-
-    //creates all the elements
-    const items = document.createElement("div")
-    // give add class
-    items.classList.add("items")
     
-    
-    const thebookname = document.createElement("h3")
-    const theauthorname = document.createElement("h2")
-    const thepagesread = document.createElement("h2")
-    const therdstatus = document.createElement("h2")
-    const change = document.createElement("button")
-    change.dataset.order=index
-
-    //stores data in the elements
-    thebookname.textContent=myLibrary[index].bkname
-    theauthorname.textContent=myLibrary[index].authname
-    thepagesread.textContent=myLibrary[index].pgnum
-    // stores the data of the checked box
-    if (myLibrary[index].rdstatus==true) {
-      therdstatus.textContent="Read"
+    static addBookToList(book){
       
-    }else{
-      therdstatus.textContent="Not finished reading"
+      const rightside = document.querySelector(".right")
+      
+      const box = document.createElement("div")
+      box.classList.add("items")
+      box.innerHTML =`<h3>${book.title}</h3> <h2>${book.author}</h2><h2>pages read ${book.numberpages}</h2> <h2>Read stat: ${book.readstatus}</h2> <button>Change status</button> <button>Remove</button> `
+      rightside.appendChild(box);
+      
     }
+  }
 
-    items.appendChild(thebookname)
-    items.appendChild(theauthorname)
-    items.appendChild(thepagesread)
-    items.appendChild(therdstatus)
-    items.appendChild(change)
-    
-    right.appendChild(items)
+// Display the books
+ document.addEventListener("DOMContentLoaded", UI.displayBooks)
 
+// Add books
+document.querySelector("#formID").addEventListener("submit", (e) =>{
+  e.preventDefault()
 
-    //console.log(items.lastChild)
-    // ERROR IS HERE
-    //I WANT THIS TO PRINT ONLY WHEN THE INNNER BUTTON IS PRESSED
-    change.addEventListener("click", console.log(change.dataset.order))
+  const title = document.querySelector("#book-name").value;
+  const author = document.querySelector("#author").value;
+  const pagesread = document.querySelector("#pages").value;
+  const readstat = document.querySelector("#read-status").checked
+    const book = new Book(title, author,pagesread,readstat)
+    console.log(book)
+    UI.addBookToList(book)
+})
 
-    change.textContent="change status"
-    //change.
-    
-
-    
-    
-   
-
+document.querySelector(".right").addEventListener("click", (e) =>{
+  if (e.target.innerHTML=="Remove") {
+    e.target.parentElement.remove()
 
   }
-}
+})
 
+
+document.querySelector(".right").addEventListener("click", (e) =>{
+  if (e.target.parentElement.getElementsByTagName('h2')[2].innerHTML=="Read stat: true") {
+    e.target.parentElement.getElementsByTagName('h2')[2].innerHTML="Read stat: false"
+  
+  }else{
+    e.target.parentElement.getElementsByTagName('h2')[2].innerHTML="Read stat: true"
+    }
+})
